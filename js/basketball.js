@@ -6,13 +6,19 @@ const team2points1DOM = document.querySelector('.team:nth-child(3) .btn:nth-chil
 const team2points2DOM = document.querySelector('.team:nth-child(3) .btn:nth-child(2)');
 const team2points3DOM = document.querySelector('.team:nth-child(3) .btn:nth-child(3)');
 
-const screen = document.querySelector('.screen');
-const history = document.querySelector('.history');
+const screenDOM = document.querySelector('.screen');
+const historyDOM = document.querySelector('.history');
 
+let scoreCount = 0;
 let team1Score = 0;
 let team2Score = 0;
 
 function updateInfo(teamId, points) {
+    scoreCount++;
+    if (scoreCount === 1) {
+        historyDOM.innerHTML = '';
+    }
+
     if (teamId === 1) {
         team1Score += points;
     }
@@ -22,9 +28,9 @@ function updateInfo(teamId, points) {
     }
 
     const text = team1Score + ':' + team2Score;
-    screen.innerText = text;
+    screenDOM.innerText = text;
 
-    history.innerHTML = `<li>Komanda ${teamId} imete ${points} task${points === 1 ? 'a' : 'us'} (${text})</li>` + history.innerHTML;
+    historyDOM.innerHTML = `<li>Komanda ${teamId} imete ${points} task${points === 1 ? 'a' : 'us'} (${text})</li>` + historyDOM.innerHTML;
 }
 
 team1points1DOM.addEventListener('click', () => updateInfo(1, 1));
