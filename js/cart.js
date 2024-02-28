@@ -44,5 +44,53 @@ for (const item of data) {
 
 tbodyDOM.innerHTML = HTML;
 
-const finalPrice = data.reduce((t, i) => t + i.unitPrice * i.count, 0);
-finalPriceDOM.innerText = finalPrice + ' Eur';
+updatFinalPrice();
+
+const trListDOM = tbodyDOM.querySelectorAll('tr');
+
+for (let i = 0; i < data.length; i++) {
+    const trDOM = trListDOM[i];
+    const formDOM = trDOM.querySelector('form');
+    const minusDOM = formDOM.querySelector('button:nth-of-type(1)');
+    const plusDOM = formDOM.querySelector('button:nth-of-type(2)');
+    const countDOM = formDOM.querySelector('span');
+    const priceDOM = trDOM.querySelector('td:nth-child(5)');
+
+    minusDOM.addEventListener('click', event => minusButtonHandler(event, i, countDOM, priceDOM));
+    plusDOM.addEventListener('click', event => plusButtonHandler(event, i, countDOM, priceDOM));
+}
+
+function minusButtonHandler(event, i, countDOM, priceDOM) {
+    event.preventDefault();
+
+    const minOrderCount = 0;
+    if (data[i].count === minOrderCount) {
+        return;
+    }
+
+    data[i].count--;
+    countDOM.innerText = data[i].count + ' vnt.';
+    priceDOM.innerText = (data[i].count * data[i].unitPrice).toFixed(2) + ' Eur';
+
+    updatFinalPrice();
+}
+
+function plusButtonHandler(event, i, countDOM, priceDOM) {
+    event.preventDefault();
+
+    const maxOrderCount = 10;
+    if (data[i].count === maxOrderCount) {
+        return;
+    }
+
+    data[i].count++;
+    countDOM.innerText = data[i].count + ' vnt.';
+    priceDOM.innerText = (data[i].count * data[i].unitPrice).toFixed(2) + ' Eur';
+
+    updatFinalPrice();
+}
+
+function updatFinalPrice() {
+    const finalPrice = data.reduce((t, i) => t + i.unitPrice * i.count, 0);
+    finalPriceDOM.innerText = finalPrice.toFixed(2) + ' Eur';
+}
