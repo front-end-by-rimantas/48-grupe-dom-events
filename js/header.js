@@ -10,6 +10,7 @@ function header() {
         <a href="${href}/counter/">Counter</a>
         <a href="${href}/basketball/">Basketball</a>
         <a href="${href}/virykle/">Virykle</a>
+        <a href="${href}/cart/">Prekiu krepselis</a>
     `;
     navDOM.innerHTML = HTML;
 }
